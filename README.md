@@ -1,6 +1,8 @@
 # My VibeBar
 
-![My VibeBar banner](assets/banner.svg)
+<img src="assets/pakistan-bus.jpg" alt="Decorated Pakistan bus" width="100%">
+
+Header image source: [Colorful bus Pakistani](https://commons.wikimedia.org/wiki/File:Colorful_bus_Pakistani.jpg) via Wikimedia Commons.
 
 Bright, bus-art Waybar for `niri` on Wayland.
 
