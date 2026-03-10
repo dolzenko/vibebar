@@ -1,0 +1,228 @@
+/* Loud enamel-sign palette with jewel tones and warm outlining. */
+@define-color chip-fg #23120d;
+@define-color chip-outline rgba(112, 24, 24, 0.34);
+@define-color chip-gloss rgba(255, 250, 240, 0.48);
+@define-color chip-depth rgba(56, 22, 12, 0.14);
+@define-color wl-1 #4ff2d2;
+@define-color wl-2 #f7e45d;
+@define-color vpn-1 #5df27e;
+@define-color vpn-2 #13b8a6;
+@define-color media-1 #ffcf3f;
+@define-color media-2 #ff5d9e;
+@define-color top-1 #63b7ff;
+@define-color top-2 #ffe25c;
+@define-color ip-1 #ff8f70;
+@define-color ip-2 #ff4fa3;
+@define-color io-1 #f6f093;
+@define-color io-2 #56d3ff;
+@define-color power-1 #ff7f50;
+@define-color power-2 #ff315f;
+@define-color mem-1 #ffe866;
+@define-color mem-2 #9de64e;
+@define-color temp-1 #ffb347;
+@define-color temp-2 #ff5f3d;
+@define-color clock-1 #f9dc5c;
+@define-color clock-2 #ff8a5b;
+@define-color eth-1 #79e8ff;
+@define-color eth-2 #3697ff;
+@define-color wifi-1 #d38bff;
+@define-color wifi-2 #ff61c7;
+@define-color loop-1 #d7d7e8;
+@define-color loop-2 #a89df0;
+@define-color net-1 #ff9a8b;
+@define-color net-2 #ffd36e;
+@define-color idle-1 #b8f05a;
+@define-color idle-2 #5cd65c;
+@define-color cpu-1 #69f0ff;
+@define-color cpu-2 #28a9ff;
+@define-color backlight-1 #ffe05d;
+@define-color backlight-2 #ff9e2c;
+@define-color kbd-1 #ffc38b;
+@define-color kbd-2 #ff7b72;
+@define-color battery-1 #76f087;
+@define-color battery-2 #27c96d;
+@define-color audio-1 #7bc8ff;
+@define-color audio-2 #5c7cff;
+@define-color profile-1 #c59bff;
+@define-color profile-2 #8c5bff;
+@define-color window-1 #76e4ff;
+@define-color window-2 #ff8ed8;
+@define-color lang-us-1 #6fb7ff;
+@define-color lang-us-2 #72f0ff;
+@define-color lang-ru-1 #7fe86b;
+@define-color lang-ru-2 #ff7168;
+
+#custom-wl-gammarelay-applet,
+#custom-vpn-dev,
+#custom-media,
+#custom-top-procs,
+#custom-external-ip,
+#custom-diskio,
+#custom-power {
+  padding: 0 10px;
+  margin: 0 2px;
+  border-radius: 12px;
+  color: @chip-fg;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px @chip-outline, inset 0 1px 0 @chip-gloss, 0 3px 10px @chip-depth;
+}
+
+#custom-wl-gammarelay-applet {
+  background: linear-gradient(135deg, @wl-1, @wl-2);
+}
+
+#custom-vpn-dev {
+  background: linear-gradient(135deg, @vpn-1, @vpn-2);
+}
+
+#custom-media {
+  background: linear-gradient(135deg, @media-1, @media-2);
+}
+
+#custom-top-procs {
+  background: linear-gradient(135deg, @top-1, @top-2);
+}
+
+#custom-external-ip {
+  background: linear-gradient(135deg, @ip-1, @ip-2);
+}
+
+#custom-diskio {
+  background: linear-gradient(135deg, @io-1, @io-2);
+  font-family: monospace;
+}
+
+#custom-power {
+  background: linear-gradient(135deg, @power-1, @power-2);
+}
+
+#clock,
+#idle_inhibitor,
+#network,
+#power-profiles-daemon,
+#cpu,
+#backlight,
+#keyboard-state,
+#battery,
+#pulseaudio,
+#window {
+  padding: 0 10px;
+  margin: 0 2px;
+  border-radius: 12px;
+  color: @chip-fg;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px @chip-outline, inset 0 1px 0 @chip-gloss, 0 3px 10px @chip-depth;
+}
+
+#clock {
+  background: linear-gradient(135deg, @clock-1, @clock-2);
+}
+
+#window {
+  background: linear-gradient(135deg, @window-1, @window-2);
+}
+
+#idle_inhibitor {
+  background: linear-gradient(135deg, @idle-1, @idle-2);
+}
+
+#network.ethernet {
+  background: linear-gradient(135deg, @eth-1, @eth-2);
+}
+
+#network.wifi {
+  background: linear-gradient(135deg, @wifi-1, @wifi-2);
+}
+
+#network {
+  background: linear-gradient(135deg, @net-1, @net-2);
+}
+
+#power-profiles-daemon {
+  background: linear-gradient(135deg, @profile-1, @profile-2);
+}
+
+#cpu {
+  background: linear-gradient(135deg, @cpu-1, @cpu-2);
+}
+
+#memory,
+#temperature,
+#custom-cpu-temp,
+#language,
+#custom-niri-language {
+  padding: 0 10px;
+  margin: 0 2px;
+  border-radius: 12px;
+  color: @chip-fg;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px @chip-outline, inset 0 1px 0 @chip-gloss, 0 3px 10px @chip-depth;
+}
+
+#memory {
+  background: linear-gradient(135deg, @mem-1, @mem-2);
+}
+
+#temperature,
+#custom-cpu-temp {
+  background: linear-gradient(135deg, @temp-1, @temp-2);
+}
+
+#backlight {
+  background: linear-gradient(135deg, @backlight-1, @backlight-2);
+}
+
+#keyboard-state {
+  background: linear-gradient(135deg, @kbd-1, @kbd-2);
+}
+
+#language.us,
+#custom-niri-language.us {
+  background: linear-gradient(135deg, @lang-us-1, @lang-us-2);
+}
+
+#language.ru,
+#custom-niri-language.ru {
+  background: linear-gradient(135deg, @lang-ru-1, @lang-ru-2);
+}
+
+#battery {
+  background: linear-gradient(135deg, @battery-1, @battery-2);
+}
+
+#pulseaudio {
+  background: linear-gradient(135deg, @audio-1, @audio-2);
+}
+
+#custom-external-ip.error,
+#custom-diskio.error,
+#custom-diskio.busy {
+  background: linear-gradient(135deg, #fecaca, #f87171);
+}
+
+#custom-diskio.active {
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+}
+
+#clock:hover,
+#window:hover,
+#idle_inhibitor:hover,
+#network:hover,
+#custom-wl-gammarelay-applet:hover,
+#custom-vpn-dev:hover,
+#custom-media:hover,
+#custom-top-procs:hover,
+#custom-external-ip:hover,
+#custom-diskio:hover,
+#power-profiles-daemon:hover,
+#cpu:hover,
+#memory:hover,
+#custom-cpu-temp:hover,
+#backlight:hover,
+#keyboard-state:hover,
+#custom-niri-language:hover,
+#battery:hover,
+#custom-power:hover,
+#pulseaudio:hover {
+  box-shadow: 0 0 0 2px rgba(112, 24, 24, 0.5), inset 0 1px 0 rgba(255, 250, 240, 0.62), 0 5px 14px rgba(56, 22, 12, 0.2);
+}
