@@ -7,6 +7,8 @@
 @define-color wl-2 #f7e45d;
 @define-color vpn-1 #5df27e;
 @define-color vpn-2 #13b8a6;
+@define-color codex-1 #7fd0ff;
+@define-color codex-2 #74f0a7;
 @define-color media-1 #ffcf3f;
 @define-color media-2 #ff5d9e;
 @define-color top-1 #63b7ff;
@@ -15,6 +17,14 @@
 @define-color ip-2 #ff4fa3;
 @define-color io-1 #f6f093;
 @define-color io-2 #56d3ff;
+@define-color clip-1 #ffdca8;
+@define-color clip-2 #ff9f6e;
+@define-color failures-1 #b8f05a;
+@define-color failures-2 #5cd65c;
+@define-color failures-warn-1 #ffe866;
+@define-color failures-warn-2 #ff9e2c;
+@define-color failures-crit-1 #fecaca;
+@define-color failures-crit-2 #f87171;
 @define-color power-1 #ff7f50;
 @define-color power-2 #ff315f;
 @define-color mem-1 #ffe866;
@@ -41,8 +51,12 @@
 @define-color kbd-2 #ff7b72;
 @define-color battery-1 #76f087;
 @define-color battery-2 #27c96d;
+@define-color bt-hid-1 #9ad7ff;
+@define-color bt-hid-2 #57f0c8;
 @define-color audio-1 #7bc8ff;
 @define-color audio-2 #5c7cff;
+@define-color audio-muted-1 #fecaca;
+@define-color audio-muted-2 #ef4444;
 @define-color profile-1 #c59bff;
 @define-color profile-2 #8c5bff;
 @define-color window-1 #76e4ff;
@@ -51,14 +65,100 @@
 @define-color lang-us-2 #72f0ff;
 @define-color lang-ru-1 #7fe86b;
 @define-color lang-ru-2 #ff7168;
+@define-color vocalinux-1 #ffb347;
+@define-color vocalinux-2 #ff4d6d;
+@define-color vocalinux-proc-1 #7dd3fc;
+@define-color vocalinux-proc-2 #38bdf8;
+@define-color stasis-wait-1 #a7f3d0;
+@define-color stasis-wait-2 #34d399;
+@define-color stasis-step-1 #93c5fd;
+@define-color stasis-step-2 #3b82f6;
+@define-color stasis-hold-1 #fde68a;
+@define-color stasis-hold-2 #f59e0b;
+@define-color stasis-pause-1 #f9a8d4;
+@define-color stasis-pause-2 #ec4899;
+@define-color stasis-down-1 #d1d5db;
+@define-color stasis-down-2 #9ca3af;
+@define-color yubikey-1 #fff06a;
+@define-color yubikey-2 #ff4141;
+
+@keyframes vocalinux-blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.32;
+  }
+}
+
+@keyframes failure-blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.18;
+  }
+}
+
+@keyframes yubikey-blink {
+  from {
+    opacity: 1;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 1px 0 @chip-gloss, 0 0 18px rgba(255, 65, 65, 0.7);
+  }
+  to {
+    opacity: 0.22;
+    box-shadow: 0 0 0 1px rgba(112, 24, 24, 0.4), inset 0 1px 0 @chip-gloss, 0 2px 8px rgba(56, 22, 12, 0.18);
+  }
+}
+
+@keyframes audio-muted-blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.28;
+  }
+}
+
+@keyframes bt-battery-blink {
+  from {
+    opacity: 1;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 1px 0 @chip-gloss, 0 0 18px rgba(248, 113, 113, 0.72);
+  }
+  to {
+    opacity: 0.2;
+    box-shadow: 0 0 0 1px rgba(112, 24, 24, 0.4), inset 0 1px 0 @chip-gloss, 0 2px 8px rgba(56, 22, 12, 0.18);
+  }
+}
+
+window#waybar {
+  background: transparent;
+  font-family: "Nimbus Sans", "Symbols Nerd Font", sans-serif;
+}
+
+window#waybar.vibebar-top #custom-codex-status,
+window#waybar.vibebar-top #custom-systemd-failures {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
 
 #custom-wl-gammarelay-applet,
 #custom-vpn-dev,
+#custom-codex-status,
 #custom-media,
 #custom-top-procs,
+#custom-systemd-failures,
+#custom-clipboard-clipboard,
+#custom-clipboard-primary,
 #custom-external-ip,
+#custom-yubikey-touch,
 #custom-diskio,
-#custom-power {
+#custom-power,
+#custom-vocalinux,
+#custom-stasis,
+#custom-bt-hid-battery,
+#custom-net-eth,
+#custom-net-wifi {
   padding: 0 10px;
   margin: 0 2px;
   border-radius: 12px;
@@ -73,6 +173,26 @@
 
 #custom-vpn-dev {
   background: linear-gradient(135deg, @vpn-1, @vpn-2);
+  min-width: 150px;
+}
+
+#custom-vpn-dev.disconnected,
+#network.disconnected {
+  background: linear-gradient(135deg, #d4d4d8, #a1a1aa);
+  color: #3f3f46;
+}
+
+#custom-codex-status {
+  background: linear-gradient(135deg, @codex-1, @codex-2);
+}
+
+window#waybar.vibebar-top #custom-codex-status {
+  font-family: monospace;
+}
+
+window#waybar.vibebar-top #custom-codex-status:hover {
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 #custom-media {
@@ -81,19 +201,123 @@
 
 #custom-top-procs {
   background: linear-gradient(135deg, @top-1, @top-2);
+  min-width: 220px;
 }
 
 #custom-external-ip {
   background: linear-gradient(135deg, @ip-1, @ip-2);
 }
 
+#custom-clipboard-clipboard,
+#custom-clipboard-primary {
+  background: linear-gradient(135deg, @clip-1, @clip-2);
+  min-width: 140px;
+}
+
+#custom-clipboard-clipboard.empty,
+#custom-clipboard-clipboard.binary,
+#custom-clipboard-primary.empty,
+#custom-clipboard-primary.binary {
+  background: linear-gradient(135deg, #e5e7eb, #cbd5e1);
+  color: #334155;
+}
+
 #custom-diskio {
   background: linear-gradient(135deg, @io-1, @io-2);
   font-family: monospace;
+  min-width: 84px;
+}
+
+#custom-systemd-failures {
+  background: linear-gradient(135deg, @failures-1, @failures-2);
+}
+
+#custom-bt-hid-battery {
+  background: linear-gradient(135deg, @bt-hid-1, @bt-hid-2);
+}
+
+#custom-bt-hid-battery.hidden {
+  padding: 0;
+  margin: 0;
+}
+
+#custom-bt-hid-battery.unknown {
+  background: linear-gradient(135deg, #e5e7eb, #cbd5e1);
+  color: #334155;
+}
+
+#custom-bt-hid-battery.error,
+#custom-bt-hid-battery.critical {
+  background: linear-gradient(135deg, #fecaca, #f87171);
+}
+
+#custom-bt-hid-battery.critical {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 1px 0 @chip-gloss, 0 0 18px rgba(248, 113, 113, 0.72);
+}
+
+#custom-systemd-failures.warn {
+  background: linear-gradient(135deg, @failures-warn-1, @failures-warn-2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 1px 0 @chip-gloss, 0 0 18px rgba(251, 191, 36, 0.65);
+}
+
+#custom-systemd-failures.critical {
+  background: linear-gradient(135deg, @failures-crit-1, @failures-crit-2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 1px 0 @chip-gloss, 0 0 18px rgba(248, 113, 113, 0.72);
+}
+
+#custom-yubikey-touch.active {
+  background: linear-gradient(135deg, @yubikey-1, @yubikey-2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 1px 0 @chip-gloss, 0 0 18px rgba(255, 65, 65, 0.7);
 }
 
 #custom-power {
   background: linear-gradient(135deg, @power-1, @power-2);
+}
+
+#custom-vocalinux.listening {
+  background: linear-gradient(135deg, @vocalinux-1, @vocalinux-2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 1px 0 @chip-gloss, 0 0 18px rgba(34, 197, 94, 0.6);
+}
+
+#custom-vocalinux.processing {
+  background: linear-gradient(135deg, @vocalinux-proc-1, @vocalinux-proc-2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 1px 0 @chip-gloss, 0 0 18px rgba(251, 191, 36, 0.65);
+}
+
+#custom-stasis.waiting {
+  background: linear-gradient(135deg, @stasis-wait-1, @stasis-wait-2);
+}
+
+#custom-stasis.active {
+  background: linear-gradient(135deg, @stasis-step-1, @stasis-step-2);
+}
+
+#custom-stasis.inhibited {
+  background: linear-gradient(135deg, @stasis-hold-1, @stasis-hold-2);
+}
+
+#custom-stasis.manual {
+  background: linear-gradient(135deg, @stasis-pause-1, @stasis-pause-2);
+}
+
+#custom-stasis.down,
+#custom-stasis.unknown {
+  background: linear-gradient(135deg, @stasis-down-1, @stasis-down-2);
+  color: #374151;
+}
+
+#custom-vocalinux.hidden,
+#custom-codex-status.hidden,
+#custom-vpn-dev.hidden,
+#custom-yubikey-touch.hidden,
+#custom-net-eth.hidden,
+#custom-net-wifi.hidden {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  color: transparent;
+  background: transparent;
+  box-shadow: none;
 }
 
 #clock,
@@ -126,12 +350,20 @@
   background: linear-gradient(135deg, @idle-1, @idle-2);
 }
 
-#network.ethernet {
+#network.ethernet,
+#custom-net-eth {
   background: linear-gradient(135deg, @eth-1, @eth-2);
+  min-width: 158px;
 }
 
-#network.wifi {
+#network.wifi,
+#custom-net-wifi {
   background: linear-gradient(135deg, @wifi-1, @wifi-2);
+  min-width: 76px;
+}
+
+#network.loopback {
+  min-width: 176px;
 }
 
 #network {
@@ -172,10 +404,6 @@
   background: linear-gradient(135deg, @backlight-1, @backlight-2);
 }
 
-#keyboard-state {
-  background: linear-gradient(135deg, @kbd-1, @kbd-2);
-}
-
 #language.us,
 #custom-niri-language.us {
   background: linear-gradient(135deg, @lang-us-1, @lang-us-2);
@@ -192,9 +420,16 @@
 
 #pulseaudio {
   background: linear-gradient(135deg, @audio-1, @audio-2);
+  font-family: "Nimbus Sans", "Symbols Nerd Font", sans-serif;
+}
+
+#pulseaudio.muted {
+  background: linear-gradient(135deg, @audio-muted-1, @audio-muted-2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), inset 0 1px 0 @chip-gloss, 0 0 18px rgba(248, 113, 113, 0.72);
 }
 
 #custom-external-ip.error,
+#custom-systemd-failures.critical,
 #custom-diskio.error,
 #custom-diskio.busy {
   background: linear-gradient(135deg, #fecaca, #f87171);
@@ -213,7 +448,14 @@
 #custom-media:hover,
 #custom-top-procs:hover,
 #custom-external-ip:hover,
+#custom-yubikey-touch:hover,
+#custom-bt-hid-battery:hover,
+#custom-net-eth:hover,
+#custom-net-wifi:hover,
 #custom-diskio:hover,
+#custom-codex-status:hover,
+#custom-stasis:hover,
+#custom-vocalinux:hover,
 #power-profiles-daemon:hover,
 #cpu:hover,
 #memory:hover,

@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 CONF_DIR="${CONF_DIR:-$SCRIPT_DIR}"
 
 reload_waybar() {
-  pkill -SIGUSR2 waybar || true
+  "$HOME/.local/bin/restart-waybar"
 }
 
 paths=()

@@ -57,6 +57,14 @@ def read_counter(path):
         return 0
 
 
+def read_operstate(name):
+    try:
+        with open(f"/sys/class/net/{name}/operstate", "r", encoding="ascii") as handle:
+            return handle.read().strip()
+    except OSError:
+        return "unknown"
+
+
 def format_rate(value):
     units = ["B", "K", "M", "G", "T"]
     rate = float(value)
@@ -100,30 +108,40 @@ def main():
     for name in ifaces:
         rx = read_counter(f"/sys/class/net/{name}/statistics/rx_bytes")
         tx = read_counter(f"/sys/class/net/{name}/statistics/tx_bytes")
-        current[name] = {"rx": rx, "tx": tx}
+        operstate = read_operstate(name)
+        current[name] = {"rx": rx, "tx": tx, "operstate": operstate}
 
         last = last_ifaces.get(name, {})
         last_rx = last.get("rx", rx)
         last_tx = last.get("tx", tx)
         rx_rate = max((rx - last_rx) / dt, 0.0)
         tx_rate = max((tx - last_tx) / dt, 0.0)
-        rates[name] = {"rx": rx_rate, "tx": tx_rate, "total": rx_rate + tx_rate}
+        rates[name] = {
+            "rx": rx_rate,
+            "tx": tx_rate,
+            "total": rx_rate + tx_rate,
+            "operstate": operstate,
+        }
 
     save_state({"ts": now, "ifaces": current})
 
     if not rates:
-        print(json.dumps({"text": "none", "tooltip": "No VPN interfaces detected"}))
+        print(json.dumps({"text": "", "tooltip": "", "class": ["hidden"]}))
         return
 
     parts = []
     tooltip_lines = []
     for name, rate in sorted(rates.items(), key=lambda item: item[1]["total"], reverse=True):
-        label = f"{name} {format_rate(rate['rx'])}↓ {format_rate(rate['tx'])}↑"
+        if rate["operstate"] != "up":
+            label = name
+        else:
+            label = f"{name} {format_rate(rate['rx'])}↓ {format_rate(rate['tx'])}↑"
         parts.append(label)
         tooltip_lines.append(label)
 
     text = " | ".join(parts)
-    print(json.dumps({"text": text, "tooltip": "\n".join(tooltip_lines)}))
+    klass = "disconnected" if rates and all(rate["operstate"] != "up" for rate in rates.values()) else "connected"
+    print(json.dumps({"text": text, "tooltip": "\n".join(tooltip_lines), "class": klass}))
 
 
 if __name__ == "__main__":
